@@ -1,0 +1,18 @@
+name: HCFactions
+version: 1.0.0
+main: xyz.sethy.hcfactions.Main
+depend: [ProtocolLib]
+commands:
+  factions:
+    aliases: [f, fac, faction, facs]
+  pvp:
+  lives:
+  balance:
+    aliases: [bal, eco, money]
+  pay:
+    aliases: [sendmoney]
+  logout:
+  sotw:
+  koth:
+  playtime:
+  coords:
