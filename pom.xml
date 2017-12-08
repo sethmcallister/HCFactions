@@ -48,10 +48,10 @@
     </build>
 
     <repositories>
-        <!--<repository>-->
-        <!--<id>stealthyone-repo</id>-->
-        <!--<url>http://repo.stealthyone.com/content/groups/public</url>-->
-        <!--</repository>-->
+        <repository>
+        <id>stealthyone-repo</id>
+        <url>http://repo.stealthyone.com/content/groups/public</url>
+        </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
