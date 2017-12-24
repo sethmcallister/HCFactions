@@ -27,11 +27,8 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        System.out.println(event.getPlayer().getAddress());
-        System.out.println("respawning");
         Profile profile = HCFAPI.getHCFManager().findProfileByUniqueId(event.getPlayer().getUniqueId());
         if (!this.joinNextForRevive.contains(event.getPlayer().getUniqueId()) && (profile.getDeathbanTime() - System.currentTimeMillis()) > 0L) {
-            System.out.println("is dead");
             StringBuilder message = new StringBuilder();
             message.append("&cYou have died!").append("\n").append("&cYour death-ban expires in ").append(GooseTicker.formatTime(profile.getDeathbanTime() - System.currentTimeMillis())).append(".\n");
             if (profile.getLives() < 0)
@@ -42,7 +39,6 @@ public class PlayerRespawnListener implements Listener {
             }
             message.append("&bFor more information visit https://purix.us/deathbans");
             event.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', message.toString()));
-            System.out.println("just kicked");
         }
 
         if(this.joinNextForRevive.contains(event.getPlayer().getUniqueId())) {
@@ -52,7 +48,6 @@ public class PlayerRespawnListener implements Listener {
             profile.setDeathbanTime(0L);
             HCFAPI.getRedisProfileDAO().update((HCFProfile) profile);
             this.joinNextForRevive.remove(event.getPlayer().getUniqueId());
-            System.out.println("is in joining list");
         }
     }
 }

@@ -53,23 +53,28 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        if (Main.getInstance().getTimerHandler().hasTimer(damaged, TimerType.COMBAT_TAG)) {
-            Timer timer = Main.getInstance().getTimerHandler().getTimer(damaged, TimerType.COMBAT_TAG);
-            timer.setTime(30000 + System.currentTimeMillis());
-        } else {
-            Timer timer = new DefaultTimer(TimerType.COMBAT_TAG, 30000 + System.currentTimeMillis(), damaged);
-            Main.getInstance().getTimerHandler().addTimer(damaged, timer);
-            damaged.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    "&eYou have been spawn-tagged for &c30&e seconds."));
-        }
+//        if (Main.getInstance().getTimerHandler().hasTimer(damaged, TimerType.COMBAT_TAG)) {
+//            Timer timer = Main.getInstance().getTimerHandler().getTimer(damaged, TimerType.COMBAT_TAG);
+//            timer.setTime(30000 + System.currentTimeMillis());
+//        } else {
+//            Timer timer = new DefaultTimer(TimerType.COMBAT_TAG, 30000 + System.currentTimeMillis(), damaged);
+//            Main.getInstance().getTimerHandler().addTimer(damaged, timer);
+//            damaged.sendMessage(ChatColor.translateAlternateColorCodes('&',
+//                    "&eYou have been spawn-tagged for &c30&e seconds."));
+//        }
+        doPlayerTag(damaged);
+        doPlayerTag(damager);
 
-        if (Main.getInstance().getTimerHandler().hasTimer(damager, TimerType.COMBAT_TAG)) {
-            Timer timer = Main.getInstance().getTimerHandler().getTimer(damager, TimerType.COMBAT_TAG);
+    }
+
+    private void doPlayerTag(final Player player) {
+        if (Main.getInstance().getTimerHandler().hasTimer(player, TimerType.COMBAT_TAG)) {
+            Timer timer = Main.getInstance().getTimerHandler().getTimer(player, TimerType.COMBAT_TAG);
             timer.setTime(30000 + System.currentTimeMillis());
         } else {
-            Timer timer = new DefaultTimer(TimerType.COMBAT_TAG, 30000 + System.currentTimeMillis(), damager);
-            Main.getInstance().getTimerHandler().addTimer(damager, timer);
-            damager.sendMessage(ChatColor.translateAlternateColorCodes('&',
+            Timer timer = new DefaultTimer(TimerType.COMBAT_TAG, 30000 + System.currentTimeMillis(), player);
+            Main.getInstance().getTimerHandler().addTimer(player, timer);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     "&eYou have been spawn-tagged for &c30&e seconds."));
         }
     }
