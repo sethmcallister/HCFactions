@@ -34,6 +34,7 @@ public class FactionLeaveCommand extends SubCommand {
                 faction.getAllMembers().remove(sender.getUniqueId());
                 faction.getMembers().remove(sender.getUniqueId());
                 faction.getCaptains().remove(sender.getUniqueId());
+                faction.setNeedsUpdate(true);
                 sender.sendMessage("&eYou have forcefully left the faction &a" + faction.getFactionName() + "&e.");
                 for (UUID uuid : faction.getAllMembers()) {
                     Profile user1 = HCFAPI.getHCFManager().findProfileByUniqueId(uuid);
@@ -62,6 +63,7 @@ public class FactionLeaveCommand extends SubCommand {
         faction.getMembers().remove(sender.getUniqueId());
         faction.getCaptains().remove(sender.getUniqueId());
         faction.getCaptains().add(currentLeader);
+        faction.setNeedsUpdate(true);
         sender.sendMessage("&eYou have left the faction &a" + faction.getFactionName() + "&e.");
         for (UUID uuid : faction.getAllMembers()) {
             Profile user1 = HCFAPI.getHCFManager().findProfileByUniqueId(uuid);

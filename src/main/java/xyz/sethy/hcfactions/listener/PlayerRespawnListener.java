@@ -41,7 +41,7 @@ public class PlayerRespawnListener implements Listener {
             event.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', message.toString()));
         }
 
-        if(this.joinNextForRevive.contains(event.getPlayer().getUniqueId())) {
+        if (this.joinNextForRevive.contains(event.getPlayer().getUniqueId())) {
             event.getPlayer().getInventory().clear();
             event.getPlayer().teleport(Main.getInstance().getSpawn());
             profile.setPlayTimeSinceLastDeath(0L);

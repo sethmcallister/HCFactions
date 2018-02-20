@@ -1,7 +1,7 @@
 package xyz.sethy.hcfactions.api.impl.dao;
 
-import mkremins.fanciful.shaded.gson.Gson;
-import mkremins.fanciful.shaded.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
 import xyz.sethy.hcfactions.api.HCFAPI;
 import xyz.sethy.hcfactions.api.Profile;
@@ -20,19 +20,19 @@ public class RedisProfileDAO {
         this.jedis = new Jedis();
     }
 
-    public void insert(HCFProfile profile) {
+    public void insert(Profile profile) {
         try (Jedis connection = jedis) {
             connection.set(getKey(profile), this.gson.toJson(profile));
         }
     }
 
-    public void update(HCFProfile profile) {
+    public void update(Profile profile) {
         try (Jedis connection = jedis) {
             connection.set(getKey(profile), this.gson.toJson(profile));
         }
     }
 
-    public void delete(HCFProfile profile) {
+    public void delete(Profile profile) {
         try (Jedis connection = jedis) {
             connection.del(getKey(profile));
         }

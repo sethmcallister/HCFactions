@@ -1,7 +1,7 @@
 package xyz.sethy.hcfactions.api.impl.dao;
 
-import mkremins.fanciful.shaded.gson.Gson;
-import mkremins.fanciful.shaded.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import redis.clients.jedis.Jedis;
 import xyz.sethy.hcfactions.api.Faction;
 import xyz.sethy.hcfactions.api.HCFAPI;

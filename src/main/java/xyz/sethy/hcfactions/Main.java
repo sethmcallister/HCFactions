@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.sethy.hcfactions.api.Faction;
 import xyz.sethy.hcfactions.api.HCFAPI;
-import xyz.sethy.hcfactions.api.Location;
 import xyz.sethy.hcfactions.api.impl.CoreHCFManager;
 import xyz.sethy.hcfactions.command.coords.CoordsCommand;
 import xyz.sethy.hcfactions.command.economy.BalanceCommand;

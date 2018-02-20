@@ -34,6 +34,7 @@ public class FactionJoinCommand extends SubCommand {
                 invitedto.getInvites().remove(sender.getUniqueId());
                 invitedto.getAllMembers().add(sender.getUniqueId());
                 invitedto.getMembers().add(sender.getUniqueId());
+                invitedto.setNeedsUpdate(true);
 
                 sender.sendMessage("&eYou have forcefully joined the faction &a" + invitedto.getFactionName().get() + "&e.");
                 for (UUID uuid : invitedto.getAllMembers()) {
@@ -76,6 +77,7 @@ public class FactionJoinCommand extends SubCommand {
         invitedto.getInvites().remove(sender.getUniqueId());
         invitedto.getAllMembers().add(sender.getUniqueId());
         invitedto.getMembers().add(sender.getUniqueId());
+        invitedto.setNeedsUpdate(true);
 
         sender.sendMessage("&eYou have joined the faction &a" + invitedto.getFactionName().get() + "&e.");
         for (UUID uuid : invitedto.getAllMembers()) {

@@ -44,8 +44,10 @@ public class FactionAllyCommand extends SubCommand {
             if (faction.getAllyRequests().contains(faction1.getFactionId())) {
                 faction.getAllyRequests().remove(faction1.getFactionId());
                 faction.getAllies().add(faction1.getFactionId());
+                faction.setNeedsUpdate(true);
 
                 faction1.getAllies().add(faction.getFactionId());
+                faction1.setNeedsUpdate(true);
 
                 for (UUID uuid : faction.getAllMembers()) {
                     Profile user1 = HCFAPI.getHCFManager().findProfileByUniqueId(uuid);

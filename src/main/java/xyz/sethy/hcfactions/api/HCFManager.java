@@ -64,4 +64,6 @@ public interface HCFManager {
      * @see Profile
      */
     Profile findProfileByString(String string);
+
+    List<Profile> findAllProfiles();
 }

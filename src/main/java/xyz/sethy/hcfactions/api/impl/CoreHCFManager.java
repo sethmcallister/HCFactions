@@ -80,6 +80,11 @@ public class CoreHCFManager implements HCFManager {
         return this.profiles.stream().filter(profile -> profile.getName().equalsIgnoreCase(s)).findFirst().orElse(null);
     }
 
+    @Override
+    public List<Profile> findAllProfiles() {
+        return profiles;
+    }
+
     public void addFaction(Faction faction) {
         if (!this.factions.contains(faction)) {
             this.factions.add(faction);

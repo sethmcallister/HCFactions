@@ -29,11 +29,11 @@ public class PotionEffectListener implements Listener {
         for (int i = 0; i < event.getPotion().getEffects().size(); i++) {
             PotionEffect potionEffect = (PotionEffect) event.getPotion().getEffects().toArray()[i];
 
-            if(!this.maxPotionLevels.containsKey(potionEffect.getType()))
+            if (!this.maxPotionLevels.containsKey(potionEffect.getType()))
                 continue;
 
             int level = maxPotionLevels.get(potionEffect.getType());
-            if(potionEffect.getAmplifier() > level)
+            if (potionEffect.getAmplifier() > level)
                 event.getPotion().getEffects().remove(potionEffect);
         }
     }
@@ -41,19 +41,19 @@ public class PotionEffectListener implements Listener {
     @EventHandler
     public void onEntityInteract(final PlayerInteractEvent event) {
         ItemStack hand = event.getPlayer().getItemInHand();
-        if(hand.getType().getId() != 373)
+        if (hand.getType().getId() != 373)
             return;
 
         Potion potion = Potion.fromItemStack(hand);
-        if(potion == null)
+        if (potion == null)
             return;
 
-        if(!this.maxPotionLevels.containsKey(potion.getType().getEffectType())) {
+        if (!this.maxPotionLevels.containsKey(potion.getType().getEffectType())) {
             return;
         }
 
         int level = this.maxPotionLevels.get(potion.getType().getEffectType());
-        if(potion.getLevel() > level) {
+        if (potion.getLevel() > level) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "You are not allowed to this potion.");
         }

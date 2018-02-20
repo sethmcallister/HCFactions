@@ -25,6 +25,7 @@ public class HCFProfile implements Profile {
     private long totalPlayTime;
     private transient long joinedLast;
     private transient long lastCached;
+    private transient boolean needsUpdate;
 
     public HCFProfile(UUID uuid, String name) {
         this.uuid = uuid;
@@ -73,7 +74,7 @@ public class HCFProfile implements Profile {
 
     public void setBalance(double balance) {
         this.balance = balance;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public int getKills() {
@@ -82,7 +83,7 @@ public class HCFProfile implements Profile {
 
     public void setKills(int kills) {
         this.kills = kills;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public int getLives() {
@@ -91,7 +92,7 @@ public class HCFProfile implements Profile {
 
     public void setLives(int lives) {
         this.lives = lives;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public long getDeathbanTime() {
@@ -100,7 +101,7 @@ public class HCFProfile implements Profile {
 
     public void setDeathbanTime(long deathbanTime) {
         this.deathbanTime = deathbanTime;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public long getPvpTimer() {
@@ -109,7 +110,7 @@ public class HCFProfile implements Profile {
 
     public void setPvpTimer(long pvpTimer) {
         this.pvpTimer = pvpTimer;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public boolean hasJoinedThisMap() {
@@ -118,7 +119,7 @@ public class HCFProfile implements Profile {
 
     public void setHasJoinedThisMap(boolean joinedThisMap) {
         this.joinedThisMap = joinedThisMap;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     public int getDeaths() {
@@ -127,7 +128,7 @@ public class HCFProfile implements Profile {
 
     public void setDeaths(int deaths) {
         this.deaths = deaths;
-        HCFAPI.getRedisProfileDAO().update(this);
+        setNeedsUpdate(true);
     }
 
     @Override
@@ -161,6 +162,11 @@ public class HCFProfile implements Profile {
     }
 
     @Override
+    public void setPlayTimeSinceLastDeath(long time) {
+        this.playTimeSinceLastDeath = time;
+    }
+
+    @Override
     public long addTime(long time) {
         return playTimeSinceLastDeath += time;
     }
@@ -191,7 +197,12 @@ public class HCFProfile implements Profile {
     }
 
     @Override
-    public void setPlayTimeSinceLastDeath(long time) {
-        this.playTimeSinceLastDeath = time;
+    public boolean needsUpdate() {
+        return needsUpdate;
+    }
+
+    @Override
+    public void setNeedsUpdate(boolean needsUpdate) {
+        this.needsUpdate = needsUpdate;
     }
 }

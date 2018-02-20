@@ -279,7 +279,7 @@ public class BardClass extends PvPClass implements Listener {
         switch (hand.getType()) {
             case FEATHER: {
                 int energy = this.energy.get(player.getUniqueId());
-                if(energy < 10) {
+                if (energy < 10) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou do not have enough energy to do this, you need 10."));
                     return;
                 }
@@ -319,10 +319,10 @@ public class BardClass extends PvPClass implements Listener {
 
     private void decrementHand(Player player) {
         ItemStack hand = player.getItemInHand();
-        if(hand.getAmount() == 1) {
+        if (hand.getAmount() == 1) {
             player.getInventory().remove(hand);
         }
-        hand.setAmount(hand.getAmount() -1);
+        hand.setAmount(hand.getAmount() - 1);
     }
 
     public Map<UUID, Integer> getEnergy() {

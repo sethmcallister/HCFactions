@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.sethy.hcfactions.Main;
@@ -14,7 +13,6 @@ import xyz.sethy.hcfactions.api.Faction;
 import xyz.sethy.hcfactions.api.HCFAPI;
 import xyz.sethy.hcfactions.api.Profile;
 import xyz.sethy.hcfactions.api.impl.HCFProfile;
-import xyz.sethy.hcfactions.goose.GooseTicker;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,10 +33,10 @@ public class PlayerDeathListener implements Listener {
 
         Faction killedFaction = HCFAPI.getHCFManager().findByUser(killed.getUniqueId());
         double oldDTR = 0.0;
-        if(killedFaction != null) {
+        if (killedFaction != null) {
             oldDTR = killedFaction.getDTR();
             killedFaction.setDTR(oldDTR - 1.0);
-            if(killedFaction.isRaidable().get())
+            if (killedFaction.isRaidable().get())
                 killedFaction.getDTRFreeze().set(System.currentTimeMillis() + TimeUnit.MINUTES.toMinutes(60L));
         }
 
@@ -46,7 +44,7 @@ public class PlayerDeathListener implements Listener {
 
             for (Player player : Bukkit.getOnlinePlayers()) {
                 String factionColor = "&c";
-                if(killedFaction != null) {
+                if (killedFaction != null) {
                     if (killedFaction.getAllMembers().contains(player.getUniqueId()))
                         factionColor = "&a";
                     else {
@@ -58,7 +56,7 @@ public class PlayerDeathListener implements Listener {
                     }
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', factionColor + killed.getName() + "&4[" + killedProfile.getKills() + "]&e has died."));
-                if(factionColor.equalsIgnoreCase("&a")) {
+                if (factionColor.equalsIgnoreCase("&a")) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eMember Death: &c" + killed.getName()));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eDTR Change: &c " + oldDTR + "&e ->&c " + killedFaction.getDTR()));
                 }
@@ -74,7 +72,7 @@ public class PlayerDeathListener implements Listener {
             String factionColor = "&c";
             String killerColor = "&c";
 
-            if(killedFaction != null) {
+            if (killedFaction != null) {
                 if (killedFaction.getAllMembers().contains(player.getUniqueId()))
                     factionColor = "&a";
                 else {
@@ -86,7 +84,7 @@ public class PlayerDeathListener implements Listener {
                 }
             }
 
-            if(killerFaction != null) {
+            if (killerFaction != null) {
                 if (killerFaction.getAllMembers().contains(player.getUniqueId())) {
                     killerColor = "&a";
                 } else {
@@ -100,7 +98,7 @@ public class PlayerDeathListener implements Listener {
 
             addKillToItem(killer.getItemInHand(), killer, killed);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', factionColor + killed.getName() + "&4[" + killedProfile.getKills() + "]&e was slain by " + killerColor + killer.getName() + "&4[" + killerProfile.getKills() + "]"));
-            if(factionColor.equalsIgnoreCase("&a")) {
+            if (factionColor.equalsIgnoreCase("&a")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eMember Death: &c" + killed.getName()));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eDTR Change: &c " + oldDTR + "&e ->&c " + killedFaction.getDTR()));
             }

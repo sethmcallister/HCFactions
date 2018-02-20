@@ -12,7 +12,7 @@ import xyz.sethy.hcfactions.Main;
 public class WorldSwitchListener implements Listener {
     @EventHandler
     public void onWorldSwitch(final PlayerTeleportEvent event) {
-        if(event.getFrom().getWorld().getEnvironment() == World.Environment.THE_END && event.getTo().getWorld().getEnvironment() == World.Environment.NORMAL) {
+        if (event.getFrom().getWorld().getEnvironment() == World.Environment.THE_END && event.getTo().getWorld().getEnvironment() == World.Environment.NORMAL) {
             event.getPlayer().teleport(Main.getInstance().getEndExit());
         } else if (event.getTo().getWorld().getEnvironment() == World.Environment.NORMAL && event.getFrom().getWorld().getEnvironment() == World.Environment.THE_END) {
             event.getPlayer().teleport(Main.getInstance().getEndEnterance());

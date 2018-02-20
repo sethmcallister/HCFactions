@@ -55,4 +55,7 @@ public interface Faction {
     void setClaim(Claim claim);
 
     boolean isCaptainOrHigher(UUID uuid);
+
+    boolean needsUpdate();
+    void setNeedsUpdate(boolean needsUpdate);
 }

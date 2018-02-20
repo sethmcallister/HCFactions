@@ -1,7 +1,6 @@
 package xyz.sethy.hcfactions.command.factions;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -49,6 +48,7 @@ public class FactionDeinviteCommand extends SubCommand {
             return;
         }
         faction.getInvites().remove(player.getUniqueId());
+        faction.setNeedsUpdate(true);
         sender.sendMessage("&eYou have de-invited &a" + player.getName() + "&efrom your faction.");
 
         for (UUID uuid : faction.getAllMembers()) {

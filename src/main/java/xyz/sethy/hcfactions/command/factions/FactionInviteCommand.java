@@ -44,6 +44,7 @@ public class FactionInviteCommand extends SubCommand {
             return;
         }
         faction.getInvites().add(player.getUniqueId());
+        faction.setNeedsUpdate(true);
         sender.sendMessage("&eYou have invited &a" + player.getName() + "&eto your faction.");
 
         for (UUID uuid : faction.getAllMembers()) {

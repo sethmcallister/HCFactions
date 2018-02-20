@@ -20,7 +20,6 @@ import xyz.sethy.hcfactions.timer.Timer;
 import xyz.sethy.hcfactions.timer.TimerType;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ArcherClass extends PvPClass implements Listener {

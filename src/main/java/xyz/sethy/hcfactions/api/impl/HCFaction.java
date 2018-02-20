@@ -34,6 +34,7 @@ public class HCFaction implements Faction {
     private AtomicLong dtrFreeze;
     private HCClaim claim;
     private AtomicReference<FactionType> factionType;
+    private transient boolean needsUpdate;
 
     public HCFaction(final String name, final UUID leader) {
         this.uuid = UUID.randomUUID();
@@ -108,6 +109,7 @@ public class HCFaction implements Faction {
     @Override
     public void setBalance(Double balance) {
         this.balance = balance;
+        setNeedsUpdate(true);
     }
 
     public Double getDTR() {
@@ -117,6 +119,7 @@ public class HCFaction implements Faction {
     @Override
     public void setDTR(Double dtr) {
         this.dtr = dtr;
+        setNeedsUpdate(true);
     }
 
     public Double getMaxDTR() {
@@ -139,6 +142,7 @@ public class HCFaction implements Faction {
     @Override
     public void setHome(Location location) {
         this.home = (HCLocation) location;
+        setNeedsUpdate(true);
     }
 
     public AtomicLong getDTRFreeze() {
@@ -243,6 +247,7 @@ public class HCFaction implements Faction {
     @Override
     public void setClaim(Claim claim) {
         this.claim = (HCClaim) claim;
+        setNeedsUpdate(true);
     }
 
     @Override
@@ -263,5 +268,15 @@ public class HCFaction implements Faction {
 
     public BigDecimal getDTRIncrement(final int playersOnline) {
         return BigDecimal.valueOf(this.dtr + 1);
+    }
+
+    @Override
+    public boolean needsUpdate() {
+        return needsUpdate;
+    }
+
+    @Override
+    public void setNeedsUpdate(boolean needsUpdate) {
+        this.needsUpdate = needsUpdate;
     }
 }

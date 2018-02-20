@@ -2,7 +2,6 @@ package xyz.sethy.hcfactions.handler;
 
 
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 import xyz.sethy.hcfactions.api.HCFAPI;
 import xyz.sethy.hcfactions.api.Profile;
 
@@ -15,7 +14,7 @@ public class DeathbanHandler {
         profile.setLastCached(System.currentTimeMillis());
 
         long sixHours = TimeUnit.HOURS.toMillis(6L);
-        if(profile.getPlayTimeSinceLastDeath() >= sixHours) {
+        if (profile.getPlayTimeSinceLastDeath() >= sixHours) {
             return sixHours;
         }
         return profile.getPlayTimeSinceLastDeath();

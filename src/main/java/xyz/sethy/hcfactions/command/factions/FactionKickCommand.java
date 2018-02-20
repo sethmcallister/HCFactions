@@ -47,6 +47,8 @@ public class FactionKickCommand extends SubCommand {
         faction.getAllMembers().remove(target.getUniqueId());
         faction.getMembers().remove(target.getUniqueId());
         faction.getCaptains().remove(target.getUniqueId());
+        faction.setNeedsUpdate(true);
+
         Profile tp = HCFAPI.getHCFManager().findProfileByUniqueId(target.getUniqueId());
         tp.setFactionId(null);
         sender.sendMessage("&eYou have kicked &a" + target.getName() + "&e from your faction.");

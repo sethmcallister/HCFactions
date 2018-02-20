@@ -8,7 +8,6 @@ import xyz.sethy.hcfactions.command.SubCommand;
 import xyz.sethy.hcfactions.goose.GooseTicker;
 import xyz.sethy.hcfactions.timer.Timer;
 import xyz.sethy.hcfactions.timer.TimerType;
-import xyz.sethy.hcfactions.util.TimerUtil;
 
 import java.util.Date;
 import java.util.LinkedList;

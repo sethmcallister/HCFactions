@@ -39,6 +39,7 @@ public class FactionLeaderCommand extends SubCommand {
                     return;
                 }
                 faction.getLeader().set(target.getUniqueId());
+                faction.setNeedsUpdate(true);
                 sender.sendMessage(
                         "&eYou have forcefully promoted &a" + target.getName() + "&e to the faction's leader.");
                 target.sendMessage("&eYou have been forcefully promoted to the faction's leader.");

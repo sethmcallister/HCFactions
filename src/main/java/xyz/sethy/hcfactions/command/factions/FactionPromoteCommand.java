@@ -54,6 +54,7 @@ public class FactionPromoteCommand extends SubCommand {
             return;
         }
         faction.getCaptains().add(target.getUniqueId());
+        faction.setNeedsUpdate(true);
         sender.sendMessage("&eYou have promoted &a" + target.getName() + "&e to a faction captain.");
         target.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eYou have been promoted to a faction captain."));
         for (UUID uuid : faction.getAllMembers()) {

@@ -8,7 +8,6 @@ import xyz.sethy.hcfactions.command.SubCommand;
 import xyz.sethy.hcfactions.util.TimerUtil;
 
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 public class SotwStartCommand extends SubCommand {
     public SotwStartCommand() {
@@ -22,7 +21,7 @@ public class SotwStartCommand extends SubCommand {
             return;
         }
 
-        if(args.length != 1) {
+        if (args.length != 1) {
             sender.sendMessage("&cUsage: /sotw start <time>");
             return;
         }
