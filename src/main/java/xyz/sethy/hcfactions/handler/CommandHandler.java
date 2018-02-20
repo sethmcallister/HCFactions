@@ -4,6 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import xyz.sethy.hcfactions.Main;
 import xyz.sethy.hcfactions.api.HCFAPI;
 import xyz.sethy.hcfactions.api.Profile;
 import xyz.sethy.hcfactions.command.SubCommand;
@@ -38,8 +40,6 @@ public class CommandHandler implements CommandExecutor {
                         return subCommandEntry.getValue();
                     }
                 }
-
-
                 return subCommandEntry.getValue();
             }
         }
@@ -69,7 +69,12 @@ public class CommandHandler implements CommandExecutor {
         }
         String[] newargs = subArgs.toArray(new String[subArgs.size()]);
         subArgs.toArray(newargs);
-        subCommand.execute(profile, newargs);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                subCommand.execute(profile, newargs);
+            }
+        }.runTaskAsynchronously(Main.getInstance());
         return true;
     }
 }
