@@ -1,6 +1,7 @@
 package xyz.sethy.hcfactions.api;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface HCFManager {
@@ -37,7 +38,7 @@ public interface HCFManager {
      * @return
      * @see List
      */
-    List<Faction> findAll();
+    Map<Integer, Faction> findAllFactions();
 
     /**
      * Disband the @param faction
@@ -65,5 +66,5 @@ public interface HCFManager {
      */
     Profile findProfileByString(String string);
 
-    List<Profile> findAllProfiles();
+    Map<Integer, Profile> findAllProfiles();
 }
