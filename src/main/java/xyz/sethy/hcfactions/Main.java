@@ -27,6 +27,7 @@ import xyz.sethy.hcfactions.goose.GooseTicker;
 import xyz.sethy.hcfactions.handler.*;
 import xyz.sethy.hcfactions.listener.*;
 import xyz.sethy.hcfactions.task.GlassWallTask;
+import xyz.sethy.hcfactions.task.IOTask;
 import xyz.sethy.hcfactions.task.TPSTask;
 import xyz.sethy.hcfactions.timer.TimerHandler;
 
@@ -34,6 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends JavaPlugin {
@@ -115,6 +117,7 @@ public class Main extends JavaPlugin {
         new TPSTask().runTaskTimer(this, 0L, 1L);
         new GooseTicker().runTaskTimerAsynchronously(this, 1L, 1L);
         new GlassWallTask().runTaskTimer(this, 10L, 10L);
+        new IOTask().runTaskTimerAsynchronously(this, TimeUnit.MINUTES.toSeconds(3L) * 20L, TimeUnit.MINUTES.toSeconds(3L) * 20L);
 //        new TabUpdateTask().runTaskTimer(this, 10L, 10L);
     }
 
