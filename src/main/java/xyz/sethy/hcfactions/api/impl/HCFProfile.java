@@ -1,5 +1,6 @@
 package xyz.sethy.hcfactions.api.impl;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import xyz.sethy.hcfactions.api.HCFAPI;
@@ -7,42 +8,45 @@ import xyz.sethy.hcfactions.api.Profile;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class HCFProfile implements Profile {
     private final UUID uuid;
     private final Date joinedDate;
     private String name;
-    private long joinDate;
-    private double balance;
-    private int kills;
-    private int deaths;
-    private int lives;
-    private long deathbanTime;
-    private long pvpTimer;
-    private boolean joinedThisMap;
+    private AtomicLong joinDate;
+    private AtomicDouble balance;
+    private AtomicInteger kills;
+    private AtomicInteger deaths;
+    private AtomicInteger lives;
+    private AtomicLong deathbanTime;
+    private AtomicLong pvpTimer;
+    private AtomicBoolean joinedThisMap;
     private UUID factionId;
-    private long playTimeSinceLastDeath;
-    private long totalPlayTime;
-    private transient long joinedLast;
-    private transient long lastCached;
-    private transient boolean needsUpdate;
+    private AtomicLong playTimeSinceLastDeath;
+    private AtomicLong totalPlayTime;
+    private transient AtomicLong joinedLast;
+    private transient AtomicLong lastCached;
+    private transient AtomicBoolean needsUpdate;
 
     public HCFProfile(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
-        this.joinDate = System.currentTimeMillis();
-        this.balance = 0;
-        this.kills = 0;
-        this.deaths = 0;
-        this.lives = 0;
-        this.deathbanTime = 0;
-        this.pvpTimer = 0;
-        this.joinedThisMap = false;
+        this.joinDate = new AtomicLong(System.currentTimeMillis());
+        this.balance = new AtomicDouble(0);
+        this.kills = new AtomicInteger();
+        this.deaths = new AtomicInteger();
+        this.lives = new AtomicInteger();
+        this.deathbanTime = new AtomicLong();
+        this.pvpTimer = new AtomicLong();
+        this.joinedThisMap = new AtomicBoolean();
         this.joinedDate = new Date(System.currentTimeMillis());
         this.factionId = null;
-        this.playTimeSinceLastDeath = 0;
-        this.totalPlayTime = 0;
-        this.joinedLast = System.currentTimeMillis();
+        this.playTimeSinceLastDeath = new AtomicLong();
+        this.totalPlayTime = new AtomicLong();
+        this.joinedLast = new AtomicLong(System.currentTimeMillis());
     }
 
     public UUID getUuid() {
@@ -65,69 +69,69 @@ public class HCFProfile implements Profile {
     }
 
     public long getJoinDate() {
-        return joinDate;
+        return joinDate.get();
     }
 
     public double getBalance() {
-        return balance;
+        return balance.get();
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        this.balance.lazySet(balance);
         setNeedsUpdate(true);
     }
 
     public int getKills() {
-        return kills;
+        return kills.get();
     }
 
     public void setKills(int kills) {
-        this.kills = kills;
+        this.kills.lazySet(kills);
         setNeedsUpdate(true);
     }
 
     public int getLives() {
-        return lives;
+        return lives.get();
     }
 
     public void setLives(int lives) {
-        this.lives = lives;
+        this.lives.lazySet(lives);
         setNeedsUpdate(true);
     }
 
     public long getDeathbanTime() {
-        return deathbanTime;
+        return deathbanTime.get();
     }
 
     public void setDeathbanTime(long deathbanTime) {
-        this.deathbanTime = deathbanTime;
+        this.deathbanTime.lazySet(deathbanTime);
         setNeedsUpdate(true);
     }
 
     public long getPvpTimer() {
-        return pvpTimer;
+        return pvpTimer.get();
     }
 
     public void setPvpTimer(long pvpTimer) {
-        this.pvpTimer = pvpTimer;
+        this.pvpTimer.lazySet(pvpTimer);
         setNeedsUpdate(true);
     }
 
     public boolean hasJoinedThisMap() {
-        return joinedThisMap;
+        return joinedThisMap.get();
     }
 
     public void setHasJoinedThisMap(boolean joinedThisMap) {
-        this.joinedThisMap = joinedThisMap;
+        this.joinedThisMap.lazySet(joinedThisMap);
         setNeedsUpdate(true);
     }
 
     public int getDeaths() {
-        return deaths;
+        return deaths.get();
     }
 
     public void setDeaths(int deaths) {
-        this.deaths = deaths;
+        this.deaths.lazySet(deaths);
         setNeedsUpdate(true);
     }
 
@@ -158,51 +162,52 @@ public class HCFProfile implements Profile {
 
     @Override
     public long getPlayTimeSinceLastDeath() {
-        return playTimeSinceLastDeath;
+        return playTimeSinceLastDeath.get();
     }
 
     @Override
     public void setPlayTimeSinceLastDeath(long time) {
-        this.playTimeSinceLastDeath = time;
+        this.playTimeSinceLastDeath.lazySet(time);
+        setNeedsUpdate(true);
     }
 
     @Override
     public long addTime(long time) {
-        return playTimeSinceLastDeath += time;
+        return playTimeSinceLastDeath.addAndGet(time);
     }
 
     @Override
     public long getTotalPlayTime() {
-        return totalPlayTime;
+        return totalPlayTime.get();
     }
 
     @Override
     public long getOnlineFor() {
-        return System.currentTimeMillis() - joinedLast;
+        return System.currentTimeMillis() - joinedLast.get();
     }
 
     @Override
     public void setJoinedLast(long time) {
-        this.joinedLast = time;
+        this.joinedLast.lazySet(time);
     }
 
     @Override
     public long getLastCached() {
-        return lastCached;
+        return lastCached.get();
     }
 
     @Override
     public void setLastCached(long lastCached) {
-        this.lastCached = lastCached;
+        this.lastCached.lazySet(lastCached);
     }
 
     @Override
     public boolean needsUpdate() {
-        return needsUpdate;
+        return needsUpdate.get();
     }
 
     @Override
     public void setNeedsUpdate(boolean needsUpdate) {
-        this.needsUpdate = needsUpdate;
+        this.needsUpdate.set(needsUpdate);
     }
 }
