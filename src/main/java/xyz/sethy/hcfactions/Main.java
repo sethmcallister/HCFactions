@@ -33,6 +33,7 @@ import xyz.sethy.hcfactions.timer.TimerHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends JavaPlugin {
@@ -119,8 +120,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (Faction faction : HCFAPI.getHCFManager().findAll())
-            HCFAPI.getRedisFactionDAO().update(faction);
+        for (Map.Entry<Integer, Faction> entry : HCFAPI.getHCFManager().findAllFactions().entrySet())
+            HCFAPI.getRedisFactionDAO().update(entry.getValue());
     }
 
     private void setupFactionSubCommands() {

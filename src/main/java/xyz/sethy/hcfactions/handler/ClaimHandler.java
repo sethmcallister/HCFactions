@@ -27,7 +27,8 @@ public class ClaimHandler {
     }
 
     private void loadFromFactions() {
-        for (final Faction faction : HCFAPI.getHCFManager().findAll()) {
+        for (Map.Entry<Integer, Faction> entry : HCFAPI.getHCFManager().findAllFactions().entrySet()) {
+            Faction faction = entry.getValue();
             if (faction.getFactionClaim() != null)
                 this.setFactionAt(faction.getFactionClaim(), faction);
         }

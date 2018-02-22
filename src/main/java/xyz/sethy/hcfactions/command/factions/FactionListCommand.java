@@ -24,7 +24,8 @@ public class FactionListCommand extends SubCommand {
             return;
         }
         TreeSet<Faction> factions = new TreeSet<>(new SizeComparator());
-        for (Faction faction : HCFAPI.getFactionManager().findAll()) {
+        for (Map.Entry<Integer, Faction> entry : HCFAPI.getFactionManager().findAllFactions().entrySet()) {
+            Faction faction = entry.getValue();
             if (faction != null && faction.getLeader().get() != null) {
                 int size = 0;
                 for (UUID uuid : faction.getAllMembers()) {
