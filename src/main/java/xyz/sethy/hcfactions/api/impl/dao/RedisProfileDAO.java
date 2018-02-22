@@ -22,7 +22,8 @@ public class RedisProfileDAO {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxTotal(128);
         jedisPoolConfig.setMaxIdle(128);
-        jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1");    }
+        jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1");
+    }
 
     public void insert(Profile profile) {
         try (Jedis connection = jedisPool.getResource()) {

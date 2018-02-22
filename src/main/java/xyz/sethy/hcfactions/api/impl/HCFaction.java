@@ -1,5 +1,6 @@
 package xyz.sethy.hcfactions.api.impl;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -27,14 +28,14 @@ public class HCFaction implements Faction {
     private List<UUID> coleaders;
     private List<UUID> allyRequests;
     private AtomicReference<UUID> leader;
-    private Double balance;
-    private Double dtr;
-    private Double maxDtr;
+    private AtomicDouble balance;
+    private AtomicDouble dtr;
+    private AtomicDouble maxDtr;
     private HCLocation home;
     private AtomicLong dtrFreeze;
     private HCClaim claim;
     private AtomicReference<FactionType> factionType;
-    private transient boolean needsUpdate;
+    private transient AtomicBoolean needsUpdate;
 
     public HCFaction(final String name, final UUID leader) {
         this.uuid = UUID.randomUUID();
@@ -49,9 +50,9 @@ public class HCFaction implements Faction {
         this.coleaders = new LinkedList<>();
         this.allyRequests = new LinkedList<>();
         this.leader = new AtomicReference<>(leader);
-        this.balance = 0d;
-        this.dtr = 1.01;
-        this.maxDtr = 1.01;
+        this.balance = new AtomicDouble(0);
+        this.dtr = new AtomicDouble(1.01);
+        this.maxDtr = new AtomicDouble(1.01);
         this.dtrFreeze = new AtomicLong(0);
         this.home = null;
         this.claim = null;
@@ -103,27 +104,27 @@ public class HCFaction implements Faction {
     }
 
     public Double getBalance() {
-        return balance;
+        return balance.get();
     }
 
     @Override
     public void setBalance(Double balance) {
-        this.balance = balance;
+        this.balance.lazySet(balance);
         setNeedsUpdate(true);
     }
 
     public Double getDTR() {
-        return dtr;
+        return dtr.get();
     }
 
     @Override
     public void setDTR(Double dtr) {
-        this.dtr = dtr;
+        this.dtr.lazySet(dtr);
         setNeedsUpdate(true);
     }
 
     public Double getMaxDTR() {
-        return maxDtr;
+        return maxDtr.get();
     }
 
     public Location getHome() {
@@ -223,9 +224,9 @@ public class HCFaction implements Faction {
         }
         stringBuilder.append(" &eBalance: &f$").append(this.balance).append("\n");
         stringBuilder.append("&eDeaths Until Raidable: ")
-                .append(dtr >= 0.0 ? "&a" : "&c")
+                .append(dtr.get() >= 0.0 ? "&a" : "&c")
                 .append(dtrFreeze.get() >= 0L ? "" : "\u25B2")
-                .append(dtr).append("\n");
+                .append(dtr.get()).append("\n");
         stringBuilder.append("&e&m-------------------------------------------------");
         return ChatColor.translateAlternateColorCodes('&', stringBuilder.toString());
     }
@@ -236,7 +237,7 @@ public class HCFaction implements Faction {
 
     @Override
     public AtomicBoolean isRaidable() {
-        return new AtomicBoolean(this.dtr <= 0.0D);
+        return new AtomicBoolean(this.dtr.get() <= 0.0D);
     }
 
     @Override
@@ -267,16 +268,16 @@ public class HCFaction implements Faction {
     }
 
     public BigDecimal getDTRIncrement(final int playersOnline) {
-        return BigDecimal.valueOf(this.dtr + 1);
+        return BigDecimal.valueOf(this.dtr.get() + 1);
     }
 
     @Override
     public boolean needsUpdate() {
-        return needsUpdate;
+        return needsUpdate.get();
     }
 
     @Override
     public void setNeedsUpdate(boolean needsUpdate) {
-        this.needsUpdate = needsUpdate;
+        this.needsUpdate.lazySet(needsUpdate);
     }
 }
